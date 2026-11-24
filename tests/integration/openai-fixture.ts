@@ -11,14 +11,14 @@ export function openaiFixture() {
   const fetch = async (url: string, options: RequestInit) => {
     const body = JSON.parse(String(options.body));
     if (url.endsWith('/embeddings')) {
-      expect(body.model).toBe('text-embedding-3-large');
-      expect(body.dimensions).toBe(3072);
+      expect(body.model).toBe(process.env.OPENAI_EMBEDDING_MODEL);
+      expect(body.dimensions).toBeUndefined();
       control.embedded.push(...body.input);
       return Response.json({ data: (body.input as string[]).map((text, index) => ({
-        index, embedding: Array.from({ length: 3072 }, (_, i) => i === 0 ? 1 : i === 1 ? text.length / 100 : 0),
+        index, embedding: Array.from({ length: 8 }, (_, i) => i === 0 ? 1 : i === 1 ? text.length / 100 : 0),
       })) });
     }
-    expect(body.model).toBe('gpt-6-luna');
+    expect(body.model).toBe(process.env.OPENAI_MODEL);
     expect(body.store).toBe(false);
     expect(body.text.format.strict).toBe(true);
     const input = JSON.parse(body.input);

@@ -1,6 +1,10 @@
-import { boolean, integer, jsonb, pgTable, primaryKey, serial, text, timestamp, uuid, vector } from 'drizzle-orm/pg-core';
+import { boolean, integer, jsonb, pgTable, primaryKey, serial, text, timestamp, uuid, customType } from 'drizzle-orm/pg-core';
 import type { Blueprint, Slot } from '../../domain/types';
 
+const vector = customType<{ data: number[]; driverData: string }>({
+  dataType: () => 'vector', toDriver: (value) => JSON.stringify(value),
+  fromDriver: (value) => JSON.parse(value) as number[],
+});
 const date = (name: string) => timestamp(name, { withTimezone: true, mode: 'string' }).notNull().defaultNow();
 export const examples = pgTable('examples', {
   id: serial('id').primaryKey(), revision: integer('revision').notNull().default(1),
@@ -28,5 +32,5 @@ export const drafts = pgTable('drafts', {
 }, (table) => [primaryKey({ columns: [table.batchId, table.slot] })]);
 export const embeddings = pgTable('embeddings', {
   model: text('model').notNull(), hash: text('hash').notNull(),
-  value: vector('value', { dimensions: 3072 }).notNull(),
+  value: vector('value').notNull(),
 }, (table) => [primaryKey({ columns: [table.model, table.hash] })]);

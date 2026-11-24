@@ -13,9 +13,12 @@ test('PostgreSQL memulihkan batch, menyimpan blueprint, dan memakai ulang embedd
   process.env.DATABASE_URL = testUrl;
   process.env.OPENAI_API_KEY = 'fixture-key';
   process.env.UTAS_MODE = 'live';
+  process.env.OPENAI_MODEL = 'fixture-generation';
+  process.env.OPENAI_EMBEDDING_MODEL = 'fixture-embedding';
   const { pool } = await import('../../src/server/db/client');
   try {
     await pool.query(await readFile('drizzle/0000_studio.sql', 'utf8'));
+    await pool.query(await readFile('drizzle/0001_model_native_dimensions.sql', 'utf8'));
     await pool.query('TRUNCATE studio_jobs, embeddings, drafts, draft_archive, batches, blueprints, example_revisions, examples RESTART IDENTITY');
     const { GET, POST, PATCH } = await import('../../src/app/api/[...path]/route');
     const { perform } = await import('../../src/server/jobs/runner');

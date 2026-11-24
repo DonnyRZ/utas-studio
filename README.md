@@ -24,7 +24,7 @@ npm run dev
 
 Buka **http://127.0.0.1:3000**. Tanpa kredensial, label **Mode demo** muncul dan worker memakai respons simulasi. Demo dan live punya batch, antrean, dan blueprint terpisah di database yang sama. Pustaka contoh dipakai bersama agar bisa ditinjau ulang sebelum analisis live.
 
-Untuk mode live, salin `.env.example` ke `.env.local` lalu isi `OPENAI_API_KEY` dari proyek yang memiliki akses ke `gpt-6-luna` dan `text-embedding-3-large`. Restart **web dan worker** agar mode keduanya sama. Teks yang dianalisis atau dibandingkan akan dikirim ke OpenAI. Vektor yang sudah dibuat disimpan di PostgreSQL untuk dipakai ulang. Simpan kunci di mesin lokal.
+Untuk mode live, salin `.env.example` ke `.env.local` lalu isi `OPENAI_API_KEY` dari proyek yang memiliki akses ke model di `OPENAI_MODEL` dan `OPENAI_EMBEDDING_MODEL`. Ubah kedua nama model itu di `.env.local` sesuai kebutuhan. Model generatif harus mendukung Responses API, Structured Outputs, dan pengaturan reasoning yang digunakan aplikasi. Setelah menarik perubahan proyek, jalankan `npm run db:migrate` untuk mendukung dimensi asli model embedding. Restart **web dan worker** agar mode keduanya sama. Teks yang dianalisis atau dibandingkan akan dikirim ke OpenAI. Vektor disimpan per model di PostgreSQL untuk dipakai ulang. Beralih model embedding membuat vektor baru saat diperlukan. Simpan kunci di mesin lokal.
 
 Untuk menjalankan build produksi lokal, gunakan `npm run build` lalu `npm start`. Worker tetap berjalan di terminal lain.
 

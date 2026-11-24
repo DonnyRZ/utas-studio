@@ -1,6 +1,6 @@
 import { setTimeout as sleep } from 'node:timers/promises';
 import { z } from 'zod';
-import { apiKey, model } from '../config';
+import { apiKey, requiredModel } from '../config';
 import { Problem } from '../errors';
 
 export async function openai(path: 'responses' | 'embeddings', body: object): Promise<unknown> {
@@ -50,7 +50,7 @@ export async function ask<T>(
 ) {
   const { $schema: _meta, ...format } = z.toJSONSchema(schema, { target: 'draft-7' });
   const response = responseSchema.safeParse(await openai('responses', {
-    model, instructions, input: JSON.stringify(payload), reasoning: { effort }, store: false,
+    model: requiredModel('OPENAI_MODEL'), instructions, input: JSON.stringify(payload), reasoning: { effort }, store: false,
     max_output_tokens: 8192, text: { format: { name, type: 'json_schema', strict: true, schema: format } },
   }));
   if (!response.success) throw new Problem(502, 'Respons OpenAI belum dapat dibaca.');
