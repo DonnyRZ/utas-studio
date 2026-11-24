@@ -1,0 +1,38 @@
+{
+  "name": "utas-studio",
+  "version": "2.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1",
+    "worker": "node --env-file-if-exists=.env.local --import tsx src/server/jobs/worker.ts",
+    "db:migrate": "node --env-file-if-exists=.env.local --import tsx src/server/db/migrate.ts",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.0",
+    "next": "^16.1.0",
+    "pg": "^8.16.0",
+    "pg-boss": "^12.5.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.16.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  },
+  "type": "module"
+}

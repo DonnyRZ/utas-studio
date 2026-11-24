@@ -1,0 +1,22 @@
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: .52rem; min-height: 42px;
+  padding: .55rem .93rem; border: 1px solid transparent; border-radius: 12px; color: var(--ink);
+  background: var(--sky); font-weight: 800; line-height: 1.2; transition: background .15s ease;
+}
+.button:hover:not(:disabled) { background: #d3e4ff; }
+.button:disabled { opacity: .54; }
+.button.primary { background: var(--red); color: white; }
+.button.primary:hover:not(:disabled) { background: var(--red-hover); }
+.button.primary:disabled:not([aria-busy=true]) { color: #50586d; background: #e4e4e8; opacity: 1; }
+.button.blue { background: var(--blue); color: white; }
+.button.blue:hover:not(:disabled) { background: var(--blue-hover); }
+.button.ghost { border-color: var(--line); background: transparent; }
+.button img, .button svg { flex: 0 0 18px; width: 18px; height: 18px; object-fit: contain; }
+.button:is(.primary,.blue) img { filter: brightness(0) invert(1); }
+.spinner { flex: 0 0 auto; width: 20px; height: 20px; border: 3px solid #c8d7fb; border-top-color: var(--blue); border-radius: 50%; animation: spin .75s linear infinite; }
+.button .spinner { width: 16px; height: 16px; border-width: 2px; }
+.job progress { width: 100%; accent-color: var(--blue); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.title { display: inline-block; position: relative; padding-bottom: 13px; width: fit-content; }
+.title::after { content: ""; position: absolute; inset: auto auto 1px 35%; height: 6px; width: 33%; border-radius: 50%; background: #f24937; transform: rotate(-2deg); }
+.titleBlue::after { left: 10%; background: #438fff; width: 36%; }

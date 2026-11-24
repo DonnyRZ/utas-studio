@@ -1,0 +1,6 @@
+.dialog { padding: 0; border: 1px solid var(--line); border-radius: 22px; width: 470px; max-width: calc(100% - 24px); color: var(--ink); box-shadow: 0 18px 70px #1619433a; }
+.dialog::backdrop { background: #1219434f; }
+.drawer { position: fixed; inset: 0 0 0 auto; max-width: min(100%, 580px); width: 100%; max-height: none; height: 100dvh; margin: 0; border-radius: 23px 0 0 23px; }
+.inner { padding: clamp(16px, 4vw, 28px); }
+.inner h2 { flex: 1; overflow-wrap: anywhere; }
+.inner textarea { min-height: 118px; }
